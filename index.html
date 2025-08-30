@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Color Blind API Docs</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+    body {
+      background: #121212;
+      color: #e0e0e0;
+      font-family: 'Montserrat', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+      line-height: 1.6;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: #1f1f1f;
+      padding: 20px;
+      text-align: center;
+      border-bottom: 1px solid #333;
+    }
+    header h1 {
+      margin: 0;
+      color: #85acff;
+    }
+    /* 90caf9 */
+    nav {
+      margin-top: 10px;
+    }
+    nav a {
+      color: #bbb;
+      margin: 0 15px;
+      text-decoration: none;
+    }
+    nav a:hover {
+      color: #fff;
+    }
+    main {
+      padding: 20px;
+      max-width: 900px;
+      margin: auto;
+    }
+    section {
+      margin-bottom: 40px;
+    }
+    code {
+      background: #1e1e1e;
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #ffcc80;
+    }
+    pre {
+      background: #1e1e1e;
+      padding: 12px;
+      border-radius: 8px;
+      overflow-x: auto;
+    }
+    h2 {
+      color: #ffffff;
+      /* bb86fc */
+    }
+    footer {
+      background: #1f1f1f;
+      padding: 20px;
+      text-align: center;
+      font-size: 14px;
+      border-top: 1px solid #333;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Colorify</h1>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#usage">Usage</a>
+      <a href="#examples">Examples</a>
+      <a href="#references">References</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="about">
+    <h2>About</h2>
+    <p>
+        This API converts normal colors into simulated versions as perceived by users with
+        <strong>Protanopia</strong>, <strong>Deuteranopia</strong>, and <strong>Tritanopia</strong>.
+    
+        <a href="https://github.com/yourusername/yourrepo" target="_blank"><br>View Source Code</a>
+
+    </p>
+    <p>
+        Built with Go, it’s designed to help developers test their websites and apps for
+        <em>color accessibility</em>.
+    </p>
+    <p>
+        <strong>Developed by:</strong> Sahil Deo
+        <br>
+        <a href="https://github.com/janedoe" target="_blank">GitHub</a> |
+        <a href="https://linkedin.com/in/janedoe" target="_blank">LinkedIn</a>
+    </p>
+    
+    </section>
+
+    <section id="usage">
+      <h2>Usage</h2>
+      <p>
+        Endpoint:
+        <code>GET /color?c=&lt;hex1&gt;&amp;c=&lt;hex2&gt;...</code>
+      </p>
+      <p>
+        Parameters:
+      </p>
+      <ul>
+        <li><code>c</code> — One or more hex colors (e.g., <code>#FF0000</code>)</li>
+      </ul>
+      <p>Response is JSON containing simulated color mappings.</p>
+    </section>
+
+    <section id="examples">
+      <h2>Examples</h2>
+      <p><strong>Request:</strong></p>
+      <pre>GET http://localhost:8080/color?c=#FF0000&amp;c=#00FF00</pre>
+
+      <p><strong>Response:</strong></p>
+      <pre>{
+  "colors": {
+    "protanopia": {
+      "#FF0000": "#900000",
+      "#00FF00": "#7FBF7F"
+    },
+    "deuteranopia": {
+      "#FF0000": "#A00000",
+      "#00FF00": "#7F997F"
+    },
+    "tritanopia": {
+      "#FF0000": "#F20000",
+      "#00FF00": "#6F9F9F"
+    }
+  }
+}</pre>
+    </section>
+
+    <h2 style="font-size: 1.5em; margin-bottom: 10px;">References</h2>
+    <section id="references" style="font-family: 'Arial', sans-serif; padding: 20px; background-color: #1e1e1e;">
+    <ul style="line-height: 1.6;">
+        <li>
+        Machado, G. M., Oliveira, M. M., & Fernandes, L. A. F. (2009). 
+        <em>A Physiologically-based Model for Simulation of Color Vision Deficiency</em>. 
+        IEEE Transactions on Visualization and Computer Graphics, 15(6), 1291–1298.
+        </li>
+        <li>
+        Lokno. (2015). <em>Color Blindness Simulation Matrices (Protanopia, Deuteranopia, Tritanopia)</em>. 
+        GitHub Gist. 
+        <a href="https://gist.github.com/Lokno/df7c3bfdc9ad32558bb7" target="_blank">
+            https://gist.github.com/Lokno/df7c3bfdc9ad32558bb7
+        </a>
+        </li>
+    </ul>
+    </section>
+  </main>
+
+  <footer>
+    © 2025 Sahil Deo — Built with Go
+  </footer>
+</body>
+</html>
