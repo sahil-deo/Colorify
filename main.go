@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"math"
 	"net/http"
+	"os"
 	"strconv"
 )
 
@@ -108,7 +109,7 @@ func HextoHex(hex string) (string, string, string) {
 func handler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
-	colors := r.URL.Query()["c"]
+	colors := r.URL.Query()["color"]
 
 	var d1 map[string]string = make(map[string]string, len(colors))
 	var d2 map[string]string = make(map[string]string, len(colors))
@@ -124,8 +125,19 @@ func handler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	http.HandleFunc("/color", handler)
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "index.html")
+	})
+	http.HandleFunc("/api", handler)
 
-	http.ListenAndServe(":8080", nil)
-
+	port := os.Getenv("PORT")
+	fmt.Println(port)
+	if port == "" {
+		fmt.Println("H")
+		port = "5555"
+	}
+	err := http.ListenAndServe(":"+port, nil)
+	if err != nil {
+		fmt.Println(err)
+	}
 }
