@@ -1,5 +1,5 @@
 
-# Colorify
+# Hue Blind
 
 This API converts normal colors into their simulated appearance for the three major types of color blindness:
 
@@ -16,12 +16,14 @@ It’s built in **Go** and deployed for public use.
 ### Endpoint
 ```
 
-GET https://colorify.render.com/color?c=<hex>\&c=<hex>...
+GET [https://hue-blind.onrender.com/api?color=](https://hue-blind.onrender.com/api?color=)<hex>\&color=<hex>...
 
 ```
 
+> **Note:** When using raw URLs in a browser or directly in the address bar, replace `#` with `%23` (e.g., `%23FF0000`). Most HTTP libraries in JavaScript (fetch/axios) or Python (requests) handle this encoding automatically.
+
 ### Query Parameters
-- `c` — One or more hex colors (e.g. `#FF0000`).  
+- `color` — One or more hex colors (e.g. `#FF0000`).  
   You can provide multiple values by repeating the parameter.
 
 ---
@@ -29,7 +31,7 @@ GET https://colorify.render.com/color?c=<hex>\&c=<hex>...
 ### Example Request
 ```
 
-GET https://colorify.render.com/color?c=#FF0000&c=#00FF00
+GET https://hue-blind.onrender.com/api?color=%23FF0000&color=%2300FF00
 
 ````
 
@@ -73,8 +75,9 @@ GET https://colorify.render.com/color?c=#FF0000&c=#00FF00
 ## Documentation Website
 
 Check out the docs/demo website here:
-[https://colorify.render.com](https://colorify.render.com)
+[https://hue-blind.onrender.com](https://hue-blind.onrender.com)
 
+---
 
 ## 📜 License
 
