@@ -16,7 +16,7 @@ It’s built in **Go** and deployed for public use.
 ### Endpoint
 ```
 
-GET [https://hue-blind.onrender.com/api?color=](https://hue-blind.onrender.com/api?color=)<hex>\&color=<hex>...
+GET [https://blind-hue.onrender.com/api?color=](https://blind-hue.onrender.com/api?color=)<hex>\&color=<hex>...
 
 ```
 
@@ -31,7 +31,7 @@ GET [https://hue-blind.onrender.com/api?color=](https://hue-blind.onrender.com/a
 ### Example Request
 ```
 
-GET https://hue-blind.onrender.com/api?color=%23FF0000&color=%2300FF00
+GET https://blind-hue.onrender.com/api?color=%23FF0000&color=%2300FF00
 
 ````
 
@@ -75,7 +75,7 @@ GET https://hue-blind.onrender.com/api?color=%23FF0000&color=%2300FF00
 ## Documentation Website
 
 Check out the docs/demo website here:
-[https://hue-blind.onrender.com](https://hue-blind.onrender.com)
+[https://blind-hue.onrender.com](https://blind-hue.onrender.com)
 
 ---
 
