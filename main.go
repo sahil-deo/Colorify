@@ -13,10 +13,17 @@ type Message struct {
 	Color string `json:"text"`
 }
 
-func cloneSlice(slice []string) []string {
-	newSlice := make([]string, len(slice))
-	copy(newSlice, slice)
-	return newSlice
+func sRGBToLinear(c float64) float64 {
+	if c <= 0.04045 {
+		return c / 12.92
+	}
+	return math.Pow((c+0.055)/1.055, 2.4)
+}
+func linearToSRGB(c float64) float64 {
+	if c <= 0.0031308 {
+		return c * 12.92
+	}
+	return 1.055*math.Pow(c, 1/2.4) - 0.055
 }
 func HexToRGB(hex string) ([]int64, error) {
 
@@ -73,39 +80,31 @@ func simulateColorBlind(r, g, b float64, matrix [3][3]float64) []float64 {
 	bb := r*matrix[2][0] + g*matrix[2][1] + b*matrix[2][2]
 	return []float64{clamp(rr), clamp(gg), clamp(bb)}
 }
-func RGBToHex(c []float64) string {
-	return fmt.Sprintf("#%02X%02X%02X", int(c[0]), int(c[1]), int(c[2]))
-}
 func HextoHex(hex string) (string, string, string) {
+	rgb, _ := HexToRGB(hex)
 
-	var rgb []int64 = make([]int64, 3)
+	// Convert sRGB to linear RGB
+	rLinear := sRGBToLinear(float64(rgb[0]) / 255.0)
+	gLinear := sRGBToLinear(float64(rgb[1]) / 255.0)
+	bLinear := sRGBToLinear(float64(rgb[2]) / 255.0)
 
-	rgb, _ = HexToRGB(hex)
-	var normalized []float64 = make([]float64, 3)
+	// Apply simulation matrices
+	d1Linear := simulateColorBlind(rLinear, gLinear, bLinear, protanopia)
+	d2Linear := simulateColorBlind(rLinear, gLinear, bLinear, deuteranopia)
+	d3Linear := simulateColorBlind(rLinear, gLinear, bLinear, tritanopia)
 
-	for i, c := range rgb {
-		normalized[i] = (float64(c) / 255.0)
-	}
+	// Convert linear results back to sRGB
+	d1sRGB := []float64{linearToSRGB(d1Linear[0]), linearToSRGB(d1Linear[1]), linearToSRGB(d1Linear[2])}
+	d2sRGB := []float64{linearToSRGB(d2Linear[0]), linearToSRGB(d2Linear[1]), linearToSRGB(d2Linear[2])}
+	d3sRGB := []float64{linearToSRGB(d3Linear[0]), linearToSRGB(d3Linear[1]), linearToSRGB(d3Linear[2])}
 
-	d1 := simulateColorBlind(normalized[0], normalized[1], normalized[2], protanopia)
-	d2 := simulateColorBlind(normalized[0], normalized[1], normalized[2], deuteranopia)
-	d3 := simulateColorBlind(normalized[0], normalized[1], normalized[2], tritanopia)
-
-	for i, c := range d1 {
-		d1[i] = c * 255
-	}
-
-	for i, c := range d2 {
-		d2[i] = c * 255
-	}
-
-	for i, c := range d3 {
-		d3[i] = c * 255
-	}
-
-	return RGBToHex(d1), RGBToHex(d2), RGBToHex(d3)
+	// Convert sRGB to hex
+	return RGBToHex(d1sRGB), RGBToHex(d2sRGB), RGBToHex(d3sRGB)
 }
 
+func RGBToHex(c []float64) string {
+	return fmt.Sprintf("#%02X%02X%02X", int(c[0]*255), int(c[1]*255), int(c[2]*255))
+}
 func handler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
